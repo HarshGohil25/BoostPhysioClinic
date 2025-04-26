@@ -94,3 +94,21 @@ static class Physiotherapist {
         return "ID: " + id + ", Name: " + name + ", Expertise: " + expertise;
     }
 }
+static class Appointment {
+    Patient patient;
+    Physiotherapist physio;
+    String date;
+    String status; // Added status field
+
+    Appointment(Patient patient, Physiotherapist physio, String date) {
+        this.patient = patient;
+        this.physio = physio;
+        this.date = date;
+        this.status = "booked"; // Default status when appointment is created
+    }
+
+    public String toString() {
+        return patient.name + " with " + physio.name + " on " + date + " [Status: " + status + "]";
+    }
+}
+
