@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BoostPhysioClinic {
@@ -15,6 +16,8 @@ static Scanner input = new Scanner(System.in);
             System.out.println("1. Add Patient");
             System.out.println("2. Remove Patient");
             System.out.println("3. Show All Patients");
+             System.out.println("4. Show Physiotherapists");
+            System.out.println("5. Book Appointment");
             
             System.out.print("Choose an option: ");
             int choice = input.nextInt();
@@ -94,21 +97,42 @@ static class Physiotherapist {
         return "ID: " + id + ", Name: " + name + ", Expertise: " + expertise;
     }
 }
-static class Appointment {
-    Patient patient;
-    Physiotherapist physio;
-    String date;
-    String status; // Added status field
-
-    Appointment(Patient patient, Physiotherapist physio, String date) {
-        this.patient = patient;
-        this.physio = physio;
-        this.date = date;
-        this.status = "booked"; // Default status when appointment is created
+static void bookAppointment() {
+    if (patients.isEmpty()) {
+        System.out.println("⚠️ No patients found. Add a patient first.");
+        return;
     }
 
-    public String toString() {
-        return patient.name + " with " + physio.name + " on " + date + " [Status: " + status + "]";
+    System.out.print("Enter patient ID: ");
+    int patientId = input.nextInt();
+    input.nextLine();
+
+    Patient patient = getPatientById(patientId);
+    if (patient == null) {
+        System.out.println("❌ Patient not found.");
+        return;
     }
+
+    System.out.print("Enter physiotherapist's name: ");
+    String physioName = input.nextLine();
+    Physiotherapist physio = getPhysioByName(physioName);
+
+    if (physio == null || physio.availability.isEmpty()) {
+        System.out.println("❌ Invalid physiotherapist or no available dates.");
+        return;
+    }
+
+    System.out.println("Available Dates: " + physio.availability);
+    System.out.print("Choose a date: ");
+    String date = input.nextLine();
+
+    if (!physio.availability.contains(date)) {
+        System.out.println("❌ Invalid date selected.");
+        return;
+    }
+
+    appointments.add(new Appointment(patient, physio, date));
+    physio.availability.remove(date);
+    System.out.println("✅ Appointment booked.");
 }
 
