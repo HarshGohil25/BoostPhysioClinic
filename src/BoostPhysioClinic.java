@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class BoostPhysioClinic {
@@ -177,5 +179,27 @@ static void cancelAppointment(int index, Appointment appt) {
     appointments.remove(index);
     System.out.println("❌ Appointment cancelled.");
 }
+static void printReport() {
+        if (appointments.isEmpty()) {
+            System.out.println("📭 No appointments booked.");
+            return;
+        }
+
+        System.out.println("\n====== Boost Physio Clinic Report ======\n");
+        Map<Integer, List<Appointment>> grouped = new HashMap<>();
+
+        for (Appointment appt : appointments) {
+            grouped.computeIfAbsent(appt.patient.id, k -> new ArrayList<>()).add(appt);
+        }
+
+        for (Map.Entry<Integer, List<Appointment>> entry : grouped.entrySet()) {
+            Patient patient = getPatientById(entry.getKey());
+            System.out.println("🧑 Patient: " + patient.name + " (ID: " + patient.id + ")");
+            for (Appointment appt : entry.getValue()) {
+                System.out.println("   📅 " + appt.date + " with Dr. " + appt.physio.name + " [" + appt.physio.expertise + "] [Status: " + appt.status + "]");
+            }
+            System.out.println("---------------------------------------");
+        }
+    }
 
 
