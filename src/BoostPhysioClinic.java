@@ -134,5 +134,38 @@ static void bookAppointment() {
     appointments.add(new Appointment(patient, physio, date));
     physio.availability.remove(date);
     System.out.println("✅ Appointment booked.");
+
+    // Manage (Change/Cancel) an appointment
+    static void manageAppointment() {
+        if (appointments.isEmpty()) {
+            System.out.println("No appointments to modify.");
+            return;
+        }
+
+        showAppointments();
+        System.out.print("Enter the appointment number to modify: ");
+        int index = input.nextInt() - 1;
+        input.nextLine();
+
+        if (index < 0 || index >= appointments.size()) {
+            System.out.println("❌ Invalid appointment number.");
+            return;
+        }
+
+        Appointment appt = appointments.get(index);
+        System.out.println("Selected Appointment: " + appt);
+        System.out.println("1. Change Appointment Date");
+        System.out.println("2. Cancel Appointment");
+        System.out.println("3. Mark as Attended");
+        System.out.print("Choose an option: ");
+        int option = input.nextInt();
+        input.nextLine();
+
+        if (option == 1) changeAppointmentDate(appt);
+        else if (option == 2) cancelAppointment(index, appt);
+        else if (option == 3) markAsAttended(appt);
+        else System.out.println("Invalid choice.");
+    }
 }
+
 
