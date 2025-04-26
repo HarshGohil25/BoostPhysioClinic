@@ -78,3 +78,19 @@ static void showPhysiotherapists() {
     }
 }
 }
+static class Physiotherapist {
+    int id;
+    String name, expertise;
+    List<String> availability;
+
+    Physiotherapist(int id, String name, String expertise, List<String> availability) {
+        this.id = id;
+        this.name = name;
+        this.expertise = expertise;
+        this.availability = availability;
+    }
+
+    public String toString() {
+        return "ID: " + id + ", Name: " + name + ", Expertise: " + expertise;
+    }
+}
