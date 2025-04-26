@@ -69,4 +69,12 @@ static void showPatients() {
         for (Patient p : patients) System.out.println(p);
     }
 }
+// Show all physiotherapists
+static void showPhysiotherapists() {
+    System.out.println("\n🏥 Physiotherapists:");
+    for (Physiotherapist p : physios) {
+        System.out.println(p);
+        System.out.println("   Available Dates: " + p.availability);
+    }
+}
 }
