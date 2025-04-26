@@ -167,5 +167,15 @@ static void bookAppointment() {
         else System.out.println("Invalid choice.");
     }
 }
+static void cancelAppointment(int index, Appointment appt) {
+    if (appt.status.equals("cancelled")) {
+        System.out.println("❌ This appointment is already cancelled.");
+        return;
+    }
+    appt.status = "cancelled";
+    appt.physio.availability.add(appt.date);
+    appointments.remove(index);
+    System.out.println("❌ Appointment cancelled.");
+}
 
 
